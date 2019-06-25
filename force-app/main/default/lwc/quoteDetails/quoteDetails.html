@@ -1,0 +1,50 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-grid slds-gutters slds-m-left_medium">
+            <div class="slds-col slds-size_2-of-3">
+                v-0.1
+                <p class="top">Let's Begin</p>
+                <p class="second">Your Client's Information</p>
+                <lightning-record-edit-form 
+                object-api-name={customQuoteObject} 
+                onsuccess={handleRecordCreated}>
+                    <lightning-messages></lightning-messages>
+                    <lightning-input-field field-name={customerName}></lightning-input-field>
+                    <lightning-input-field field-name={street}></lightning-input-field>
+                    <lightning-input-field class="short" field-name={zip}></lightning-input-field>
+                    <lightning-input-field field-name={employees}></lightning-input-field>
+                    <lightning-input-field field-name={industry}></lightning-input-field>
+                    <p class="second">Primary Contact</p>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name={firstname}></lightning-input-field>
+                            <lightning-input-field field-name={phone}></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-m-left_medium">
+                            <lightning-input-field field-name={lastname}></lightning-input-field>
+                            <lightning-input-field field-name={email}></lightning-input-field>        
+                        </div>
+                    </div>
+
+                    <lightning-button
+                    class="slds-m-top_small"
+                    variant="brand"
+                    type="cancel"
+                    name="cancel"
+                    label="Cancel"
+                    onclick={handleCancel}>
+                    </lightning-button>
+                    <lightning-button
+                    class="slds-m-top_small slds-m-left_medium"
+                    variant="brand"
+                    type="submit"
+                    name="next"
+                    label="Next">
+                    </lightning-button>
+                </lightning-record-edit-form>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+            </div>
+        </div>
+    </article>
+</template>
