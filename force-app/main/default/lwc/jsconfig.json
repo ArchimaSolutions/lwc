@@ -8,6 +8,12 @@
             ],
             "c/screen3": [
                 "screen3/screen3.js"
+            ],
+            "c/Page1": [
+                "Page1/Page1.js"
+            ],
+            "c/screen1": [
+                "screen1/screen1.js"
             ]
         }
     },
