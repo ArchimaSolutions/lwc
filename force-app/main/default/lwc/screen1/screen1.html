@@ -7,7 +7,7 @@
                 <div class="smallBox"></div>
             </div>
             <div class="slds-col slds-size_2-of-3">
-                <template if:true={theQuotes.data}>
+                <template if:true={theQuotes}>
                     <lightning-datatable
                         data={theQuotes.data}
                         columns={columns}
@@ -15,7 +15,7 @@
                         onrowselection={handleRowClick}>
                     </lightning-datatable>                   
                 </template>
-                <template if:false={theQuotes.data}>
+                <template if:false={theQuotes}>
                     <h3>No Quotes in Progress</h3>
                 </template>
             </div>
