@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
 import CUSTOMQUOTE_OBJECT from '@salesforce/schema/Custom_Quote__c';
@@ -12,7 +12,7 @@ import ZIP_FIELD from '@salesforce/schema/Custom_Quote__c.Zip__c';
 import FIRSTNAME_FIELD from '@salesforce/schema/Custom_Quote__c.TheFirst_Name__c';
 import LASTNAME_FIELD from '@salesforce/schema/Custom_Quote__c.TheLast_Name__c';
 import PHONE_FIELD from '@salesforce/schema/Custom_Quote__c.Phone__c';
-import EMAIL_FIELD from '@salesforce/schema/Custom_Quote__c.Email__c';
+import EMAIL_FIELD from '@salesforce/schema/Custom_Quote__c.Email__c'; 
 
 export default class QuoteDetails extends NavigationMixin(LightningElement) {
     customQuoteObject = CUSTOMQUOTE_OBJECT;
@@ -24,16 +24,38 @@ export default class QuoteDetails extends NavigationMixin(LightningElement) {
     firstname = FIRSTNAME_FIELD;
     lastname = LASTNAME_FIELD;
     phone = PHONE_FIELD;
-    email = EMAIL_FIELD;
+    email = EMAIL_FIELD; 
+    parameters = {};
+    @track recordId;
 
-    handleRecordCreated() {
-        //ToDo
+    get recordId() {
+        var theId = '';
+        if(typeof this.recordId !== 'undefined') {
+            theId = this.recordId;
+        }
+        return theId;
+    }
+
+    connectedCallback() {
+        this.parameters = this.getQueryParameters();
+        this.recordId = this.parameters.recordId;
+        // eslint-disable-next-line no-console
+        console.log('RI=' + this.recordId);
+    }
+
+    handleRecordCreated(event) {
+        // eslint-disable-next-line no-console
+        console.log(event.detail.id);
         this.handleReset();
+
         this[NavigationMixin.Navigate]({
-            type: 'standard__namedPage',
+            type: 'comm__namedPage',
             attributes: {
-                pageName: 'page2',
+                pageName: 'page3',
             },
+            state: {
+                recordId: event.detail.id
+            }
         });
     }
 
@@ -50,5 +72,18 @@ export default class QuoteDetails extends NavigationMixin(LightningElement) {
                 field.reset();
             });
         }
-     }
+    }
+    getQueryParameters() {
+        var params = {};
+        var search = location.search.substring(1);
+
+        if (search) {
+            params = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => {
+                return key === "" ? value : decodeURIComponent(value)
+            });
+        }
+
+        return params;
+    }
+
 }
